@@ -1,19 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ErrorComponent } from './components';
+import * as fromComponents from './components';
+import * as fromGuards from './guards';
 
 const routes: Routes = [
   {
     path: '',
-    // canActivate: [LoggedOutGuard],
+    canActivate: [fromGuards.userNotAuthenticathedGuard],
     loadChildren: () => import('src/app/modules/auth/auth.module').then(m => m.AuthModule)
   },
-  { path: '**', component: ErrorComponent },
+  {
+    path: 'subscribers',
+    canActivate: [fromGuards.userAuthenticathedGuard],
+    loadChildren: () => import('src/app/modules/subscribers/subscribers.module').then(m => m.SubscribersModule)
+  },
+  { path: '**', component: fromComponents.ErrorComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
 export class CoreRoutingModule { }
