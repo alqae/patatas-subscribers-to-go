@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "https://lab.app.invertebrado.co/api/",
+    "secure": true
+  }
+}
