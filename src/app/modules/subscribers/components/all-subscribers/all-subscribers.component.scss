@@ -1,0 +1,21 @@
+.subscribers-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.subscribers-table {
+  tr td:last-of-type,
+  tr td:first-of-type {
+    width: 0;
+  }
+
+  tr td:nth-child(2) {
+    width: 100%;
+  }
+
+  tr td {
+    white-space: nowrap;
+  }
+}
