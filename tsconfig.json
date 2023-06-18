@@ -9,6 +9,7 @@
       "@core/*": ["src/app/core/*"],
       "@shared/*": ["src/app/shared/*"],
       "@login/*": ["src/app/modules/auth/modules/login/*"],
+      "@subscribers/*": ["src/app/modules/subscribers/*"],
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
