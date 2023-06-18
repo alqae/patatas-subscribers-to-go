@@ -1,0 +1,167 @@
+<ng-container *ngIf="subscriber;else noSubscriber">
+  <mat-card>
+    <mat-card-actions class="detail-subscriber-actions">
+      <button mat-button (click)="goBack()"><mat-icon>arrow_back</mat-icon>Go back</button>
+
+      <div>
+        <button
+          mat-button
+          color="primary"
+          (click)="edit()"
+          *ngIf="!isEditing"
+        >
+          <mat-icon>edit</mat-icon>Edit
+        </button>
+
+        <button
+          mat-button
+          color="warn"
+          (click)="deleteSubscriber()"
+        >
+          <mat-icon>delete</mat-icon>Delete
+        </button>
+      </div>
+    </mat-card-actions>
+
+    <mat-card-title class="ml-20">
+      <span class="mr-10">Subscriber</span>
+      <span class="mr-10">-</span>
+      <span class="mr-10">{{ subscriber.Id }}</span>
+    </mat-card-title>
+
+    <mat-card-content>
+      <ng-container *ngIf="isEditing;else NotIsEditing">
+        <form [formGroup]="subscriberForm" (ngSubmit)="save()" class="detail-subscriber-form pt-10">
+          <mat-form-field appearance="outline">
+            <mat-label>Name</mat-label>
+            <input matInput formControlName="Name">
+            <mat-icon matSuffix>badge</mat-icon>
+            <mat-error *ngIf="getField('Name')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="Email">
+            <mat-icon matSuffix>mail</mat-icon>
+            <mat-error *ngIf="getField('Email')?.hasError('required')">
+              This field is required
+            </mat-error>
+            <mat-error *ngIf="!getField('Email')?.hasError('required') && getField('Email')?.hasError('email')">
+              Please enter a valid email address
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>Country</mat-label>
+            <mat-select
+              [value]="subscriber.CountryCode"
+              formControlName="Country"
+              msInfiniteScroll
+              (infiniteScroll)="getNextCountries()"
+              [complete]="countries.length == totalCountries"
+            >
+              <mat-option>
+                <ngx-mat-select-search [formControl]="filterCountriesControl"></ngx-mat-select-search>
+              </mat-option>
+              <mat-option *ngFor="let country of countries" [value]="country.Code">{{country.Name}}</mat-option>
+            </mat-select>
+            <mat-icon matSuffix>language</mat-icon>
+
+            <mat-error *ngIf="getField('Country')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>PhoneNumber</mat-label>
+            <input matInput formControlName="PhoneNumber">
+            <mat-icon matSuffix>call</mat-icon>
+            <mat-error *ngIf="getField('PhoneNumber')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>Area</mat-label>
+            <input matInput formControlName="Area">
+            <mat-icon matSuffix>edit</mat-icon>
+            <mat-error *ngIf="getField('Area')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+      
+          <mat-form-field appearance="outline">
+            <mat-label>JobTitle</mat-label>
+            <input matInput formControlName="JobTitle">
+            <mat-icon matSuffix>work</mat-icon>
+            <mat-error *ngIf="getField('JobTitle')?.hasError('required')">
+              This field is required
+            </mat-error>
+          </mat-form-field>
+        </form>
+      </ng-container>
+
+      <ng-template #NotIsEditing>
+        <mat-list>
+          <mat-list-item>
+            <span matListItemTitle>Name</span>
+            <span matLine>{{ subscriber.Name }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Email</span>
+            <span matLine>{{ subscriber.Email }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Country</span>
+            <span matLine>{{ subscriber.CountryCode }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>PhoneNumber</span>
+            <span matLine>{{ subscriber.PhoneNumber }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>Area</span>
+            <span matLine>{{ subscriber.Area }}</span>
+          </mat-list-item>
+
+          <mat-list-item>
+            <span matListItemTitle>JobTitle</span>
+            <span matLine>{{ subscriber.JobTitle }}</span>
+          </mat-list-item>
+        </mat-list>
+      </ng-template>
+    </mat-card-content>
+
+    <mat-card-actions class="detail-subscriber-actions" *ngIf="isEditing">
+      <button
+        mat-button
+        (click)="reset()"
+      >
+        <mat-icon>cancel</mat-icon>Cancel
+      </button>
+  
+      <button
+        mat-button
+        color="primary"
+        (click)="save()"
+      >
+        <mat-icon>save</mat-icon>Save
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+
+<ng-template #noSubscriber>
+  <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">No subscriber found!</h4>
+    <p>There is no subscriber with the id {{subscriberId}}.</p>
+    <hr>
+    <p class="mb-0">Please try again.</p>
+  </div>
+</ng-template>

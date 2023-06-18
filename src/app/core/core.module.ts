@@ -21,6 +21,7 @@ import * as fromStore from './store';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: fromInterceptors.JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: fromInterceptors.HttpErrorInterceptor, multi: true },
   ]
 })
 export class CoreModule { }
