@@ -1,4 +1,11 @@
-.detail-subscriber {
+.alert {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.detail-subscriptor {
   &-actions {
     display: flex;
     justify-content: space-between;

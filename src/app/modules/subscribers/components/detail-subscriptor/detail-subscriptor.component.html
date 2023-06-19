@@ -1,6 +1,6 @@
-<ng-container *ngIf="subscriber;else noSubscriber">
+<ng-container *ngIf="subscriptor;else noSubscriptor">
   <mat-card>
-    <mat-card-actions class="detail-subscriber-actions">
+    <mat-card-actions class="detail-subscriptor-actions">
       <button mat-button (click)="goBack()"><mat-icon>arrow_back</mat-icon>Go back</button>
 
       <div>
@@ -16,7 +16,7 @@
         <button
           mat-button
           color="warn"
-          (click)="deleteSubscriber()"
+          (click)="DeleteSubscriptor()"
         >
           <mat-icon>delete</mat-icon>Delete
         </button>
@@ -24,14 +24,14 @@
     </mat-card-actions>
 
     <mat-card-title class="ml-20">
-      <span class="mr-10">Subscriber</span>
+      <span class="mr-10">Subscriptor</span>
       <span class="mr-10">-</span>
-      <span class="mr-10">{{ subscriber.Id }}</span>
+      <span class="mr-10">{{ subscriptor.Id }}</span>
     </mat-card-title>
 
     <mat-card-content>
       <ng-container *ngIf="isEditing;else NotIsEditing">
-        <form [formGroup]="updateSubscriberForm" (ngSubmit)="save()" class="detail-subscriber-form pt-10">
+        <form [formGroup]="updateSubscriptorForm" (ngSubmit)="save()" class="detail-subscriptor-form pt-10">
           <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput formControlName="Name">
@@ -88,38 +88,41 @@
         <mat-list>
           <mat-list-item>
             <span matListItemTitle>Name</span>
-            <span matLine>{{ subscriber.Name }}</span>
+            <span matLine>{{ subscriptor.Name }}</span>
           </mat-list-item>
 
           <mat-list-item>
             <span matListItemTitle>Email</span>
-            <span matLine>{{ subscriber.Email }}</span>
+            <span matLine>{{ subscriptor.Email }}</span>
           </mat-list-item>
 
           <mat-list-item>
             <span matListItemTitle>Country</span>
-            <span matLine>{{ subscriber.CountryCode }}</span>
+            <span matLine>
+              {{ subscriptor.CountryCode }}
+              <ng-container *ngIf="subscriptor.CountryName">- {{ subscriptor.CountryName }}</ng-container>
+            </span>
           </mat-list-item>
 
           <mat-list-item>
             <span matListItemTitle>PhoneNumber</span>
-            <span matLine>{{ subscriber.PhoneNumber }}</span>
+            <span matLine>{{ subscriptor.PhoneNumber }}</span>
           </mat-list-item>
 
           <mat-list-item>
             <span matListItemTitle>Area</span>
-            <span matLine>{{ subscriber.Area }}</span>
+            <span matLine>{{ subscriptor.Area }}</span>
           </mat-list-item>
 
           <mat-list-item>
             <span matListItemTitle>JobTitle</span>
-            <span matLine>{{ subscriber.JobTitle }}</span>
+            <span matLine>{{ subscriptor.JobTitle }}</span>
           </mat-list-item>
         </mat-list>
       </ng-template>
     </mat-card-content>
 
-    <mat-card-actions class="detail-subscriber-actions" *ngIf="isEditing">
+    <mat-card-actions class="detail-subscriptor-actions" *ngIf="isEditing">
       <button
         mat-button
         (click)="reset()"
@@ -131,7 +134,7 @@
         mat-button
         color="primary"
         (click)="save()"
-        [disabled]="updateSubscriberForm.invalid"
+        [disabled]="updateSubscriptorForm.invalid"
       >
         <mat-icon>save</mat-icon>Save
       </button>
@@ -139,11 +142,11 @@
   </mat-card>
 </ng-container>
 
-<ng-template #noSubscriber>
+<ng-template #noSubscriptor>
   <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">No subscriber found!</h4>
-    <p>There is no subscriber with the id {{subscriberId}}.</p>
-    <hr>
-    <p class="mb-0">Please try again.</p>
+    <h4 class="alert-heading">No subscriptor found!</h4>
+    <p>There is no subscriptor with the id {{subscriptorId}}.</p>
+    <p class="mb-10">Please try again.</p>
+    <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
   </div>
 </ng-template>

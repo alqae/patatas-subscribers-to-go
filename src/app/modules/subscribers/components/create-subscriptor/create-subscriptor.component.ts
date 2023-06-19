@@ -1,27 +1,27 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '@subscribers/store';
 import * as fromStoreCore from '@core/store';
 
 @Component({
-  selector: 'app-create-subscriber',
-  templateUrl: './create-subscriber.component.html',
-  styleUrls: ['./create-subscriber.component.scss']
+  selector: 'app-create-subscriptor',
+  templateUrl: './create-subscriptor.component.html',
+  styleUrls: ['./create-subscriptor.component.scss']
 })
-export class CreateSubscriberComponent {
+export class CreateSubscriptorComponent {
   subscriptorsForm = new FormArray<FormGroup>([]);
 
   constructor(
-    private _store: Store<fromStore.SubscribersState>,
+    private _storeSubscribers: Store<fromStore.SubscribersState>,
   ) {
     this.addSubscriptor();
   }
 
   save(subscriptorForm: FormGroup) {
     if (subscriptorForm.valid && subscriptorForm.dirty) {
-      this._store.dispatch(new fromStore.CreateSubscriber({
+      this._storeSubscribers.dispatch(new fromStore.CreateSubscriptor({
         Subscribers: [
           {
             ...subscriptorForm.value,
@@ -40,7 +40,7 @@ export class CreateSubscriberComponent {
 
   saveAll() {
     if (this.subscriptorsForm.valid && this.subscriptorsForm.dirty) {
-      this._store.dispatch(new fromStore.CreateSubscriber({
+      this._storeSubscribers.dispatch(new fromStore.CreateSubscriptor({
         Subscribers: this.subscriptorsForm.value.map(subscriptor => ({
           ...subscriptor,
           Topics: [],
@@ -52,7 +52,7 @@ export class CreateSubscriberComponent {
   }
 
   goBack() {
-    this._store.dispatch(new fromStoreCore.Go({ path: ['/subscribers'] }));
+    this._storeSubscribers.dispatch(new fromStoreCore.Go({ path: ['/subscribers'] }));
   }
 
   getField(subscriptorForm: FormGroup, field: string): FormControl {

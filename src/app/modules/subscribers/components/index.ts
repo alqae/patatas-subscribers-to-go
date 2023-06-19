@@ -1,13 +1,13 @@
 import { AllSubscribersComponent } from './all-subscribers/all-subscribers.component';
-import { CreateSubscriberComponent } from './create-subscriber/create-subscriber.component';
-import { DetailSubscriberComponent } from './detail-subscriber/detail-subscriber.component';
+import { CreateSubscriptorComponent } from './create-subscriptor/create-subscriptor.component';
+import { DetailSubscriptorComponent } from './detail-subscriptor/detail-subscriptor.component';
 
 export const components = [
   AllSubscribersComponent,
-  DetailSubscriberComponent,
-  CreateSubscriberComponent,
+  DetailSubscriptorComponent,
+  CreateSubscriptorComponent,
 ];
 
 export * from './all-subscribers/all-subscribers.component';
-export * from './detail-subscriber/detail-subscriber.component';
-export * from './create-subscriber/create-subscriber.component';
+export * from './detail-subscriptor/detail-subscriptor.component';
+export * from './create-subscriptor/create-subscriptor.component';

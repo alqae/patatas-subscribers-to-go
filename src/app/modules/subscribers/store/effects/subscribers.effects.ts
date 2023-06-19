@@ -13,23 +13,23 @@ import * as fromStore from '../store';
 
 @Injectable()
 export class SubscribersEffects {
-  getSubscribers$ = createEffect(() => {
+  GetSubscriptors$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.GetSubscribers),
-      map((action: fromActions.GetSubscribers) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.GetSubscriptors),
+      map((action: fromActions.GetSubscriptors) => action.payload),
       exhaustMap((payload) => {
-        return this._service.getSubscribers(payload).pipe(
-          map((response) => new fromActions.GetSubscribersSuccess(response)),
-          catchError(error => of(new fromActions.GetSubscribersFailure(error)))
+        return this._service.GetSubscriptors(payload).pipe(
+          map((response) => new fromActions.GetSubscriptorsSuccess(response)),
+          catchError(error => of(new fromActions.GetSubscriptorsFailure(error)))
         )}
       )
     )
   });
 
-  getSubscribersFailure$ = createEffect(() => {
+  GetSubscriptorsFailure$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.GetSubscribersFailure),
-      map((action: fromActions.GetSubscribersFailure) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.GetSubscriptorsFailure),
+      map((action: fromActions.GetSubscriptorsFailure) => action.payload),
       tap((response: any) => {
         const content = {
           width: '350px',
@@ -44,90 +44,90 @@ export class SubscribersEffects {
     )
   }, { dispatch: false });
 
-  getSubscriber$ = createEffect(() => {
+  GetSubscriptor$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.GetSubscriber),
-      map((action: fromActions.GetSubscriber) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.GetSubscriptor),
+      map((action: fromActions.GetSubscriptor) => action.payload),
       exhaustMap((payload) => {
-        return this._service.getSubscriber(payload).pipe(
-          map((response) => new fromActions.GetSubscriberSuccess(response)),
-          catchError(error => of(new fromActions.GetSubscriberFailure(error)))
+        return this._service.GetSubscriptor(payload).pipe(
+          map((response) => new fromActions.GetSubscriptorSuccess(response)),
+          catchError(error => of(new fromActions.GetSubscriptorFailure(error)))
         )}
       )
     )
   });
 
-  createSubscriber$ = createEffect(() => {
+  CreateSubscriptor$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.CreateSubscriber),
-      map((action: fromActions.CreateSubscriber) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.CreateSubscriptor),
+      map((action: fromActions.CreateSubscriptor) => action.payload),
       exhaustMap((payload) => {
-        return this._service.createSubscriber(payload).pipe(
-          map((response) => new fromActions.CreateSubscriberSuccess()),
-          catchError(error => of(new fromActions.CreateSubscriberFailure(error)))
+        return this._service.CreateSubscriptor(payload).pipe(
+          map((response) => new fromActions.CreateSubscriptorSuccess()),
+          catchError(error => of(new fromActions.CreateSubscriptorFailure(error)))
         )}
       )
     )
   });
 
-  createSubscriberSuccess$ = createEffect(() => {
+  CreateSubscriptorSuccess$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.CreateSubscriberSuccess),
+      ofType(fromActions.SubscriberActionTypes.CreateSubscriptorSuccess),
       tap(() => {
-        this._snackBar.open('Subscriber created successfully', 'Close', {
+        this._snackBar.open('Subscriptor created successfully', 'Close', {
           duration: 2000,
         });
       })
     )
   }, { dispatch: false });
 
-  updateSubscriber$ = createEffect(() => {
+  UpdateSubscriptor$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.UpdateSubscriber),
-      map((action: fromActions.UpdateSubscriber) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.UpdateSubscriptor),
+      map((action: fromActions.UpdateSubscriptor) => action.payload),
       exhaustMap((payload) => {
-        return this._service.updateSubscriber(payload).pipe(
-          map((response) => new fromActions.UpdateSubscriberSuccess()),
-          catchError(error => of(new fromActions.UpdateSubscriberFailure(error)))
+        return this._service.UpdateSubscriptor(payload).pipe(
+          map((response) => new fromActions.UpdateSubscriptorSuccess()),
+          catchError(error => of(new fromActions.UpdateSubscriptorFailure(error)))
         )}
       )
     )
   });
 
-  updateSubscriberSuccess$ = createEffect(() => {
+  UpdateSubscriptorSuccess$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.UpdateSubscriberSuccess),
-      withLatestFrom(this._store.select(fromReducers.getSubscriber)),
-      tap(([_, subscriber]) => {
-        if (subscriber) {
-          this._store.dispatch(new fromActions.GetSubscriber(subscriber.Id));
+      ofType(fromActions.SubscriberActionTypes.UpdateSubscriptorSuccess),
+      withLatestFrom(this._store.select(fromReducers.getSubscriptor)),
+      tap(([_, subscriptor]) => {
+        if (subscriptor) {
+          this._store.dispatch(new fromActions.GetSubscriptor(subscriptor.Id));
         }
-        this._snackBar.open('Subscriber updated successfully', 'Close', {
+        this._snackBar.open('Subscriptor updated successfully', 'Close', {
           duration: 3000,
         });
       })
     )
   }, { dispatch: false });
 
-  deleteSubscriber$ = createEffect(() => {
+  DeleteSubscriptor$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.DeleteSubscriber),
-      map((action: fromActions.DeleteSubscriber) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.DeleteSubscriptor),
+      map((action: fromActions.DeleteSubscriptor) => action.payload),
       withLatestFrom(this._store.select(fromReducers.getLastQuery)),
       tap(([payload, lastQuery]) => {
         this._utils.showDialog({
           width: '350px',
           data: {
             title: 'Confirm',
-            message: 'Are you sure you want to delete this subscriber?',
+            message: 'Are you sure you want to delete this subscriptor?',
             onConfirm: () => {
-              this._service.deleteSubscriber(payload).subscribe({
+              this._service.DeleteSubscriptor(payload).subscribe({
                 next: (response) => {
-                  this._store.dispatch(new fromActions.DeleteSubscriberSuccess(response.message));
-                  this._store.dispatch(new fromActions.GetSubscribers(lastQuery ?? {}))
+                  this._store.dispatch(new fromActions.DeleteSubscriptorSuccess(response.message));
+                  this._store.dispatch(new fromActions.GetSubscriptors(lastQuery ?? {}))
                 },
                 error: (error) => {
-                  this._store.dispatch(new fromActions.DeleteSubscriberFailure(error));
+                  this._store.dispatch(new fromActions.DeleteSubscriptorFailure(error));
                 }
               });
             }
@@ -137,10 +137,10 @@ export class SubscribersEffects {
     )
   }, { dispatch: false });
 
-  deleteSubscriberSuccess$ = createEffect(() => {
+  DeleteSubscriptorSuccess$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.DeleteSubscriberSuccess),
-      map((action: fromActions.DeleteSubscriberSuccess) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.DeleteSubscriptorSuccess),
+      map((action: fromActions.DeleteSubscriptorSuccess) => action.payload),
       tap((response) => {
         if (response) {
           this._snackBar.open(response, 'Close', { duration: 3000 });
@@ -149,10 +149,10 @@ export class SubscribersEffects {
     )
   }, { dispatch: false });
 
-  deleteSubscriberFailure$ = createEffect(() => {
+  DeleteSubscriptorFailure$ = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromActions.SubscriberActionTypes.DeleteSubscriberFailure),
-      map((action: fromActions.DeleteSubscriberFailure) => action.payload),
+      ofType(fromActions.SubscriberActionTypes.DeleteSubscriptorFailure),
+      map((action: fromActions.DeleteSubscriptorFailure) => action.payload),
       tap((response) => {
         const content = {
           width: '350px',
@@ -169,7 +169,7 @@ export class SubscribersEffects {
   constructor(
     private actions$: Actions,
     private _store: Store<fromStore.SubscribersState>,
-    private _service: fromServices.SubscriberService,
+    private _service: fromServices.SubscriptorService,
     private _utils: fromServicesShared.UtilsService,
     private _snackBar: MatSnackBar,
   ) {}

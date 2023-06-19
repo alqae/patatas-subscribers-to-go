@@ -5,21 +5,20 @@ import * as fromActions from '../actions/subscribers.actions';
 
 export function SubscribersReducer(state = fromStore.initialState, action: fromActions.SubscribersActions): fromStore.SubscribersState {
     switch (action.type) {
-      case fromActions.SubscriberActionTypes.GetSubscribers:
+      case fromActions.SubscriberActionTypes.GetSubscriptors:
       return {
         ...state,
         isLoading: true,
         lastQuery: action.payload,
       }
 
-      case fromActions.SubscriberActionTypes.GetSubscriber:
-      case fromActions.SubscriberActionTypes.DeleteSubscriber:
+      case fromActions.SubscriberActionTypes.GetSubscriptor:
         return {
           ...state,
           isLoading: true,
         };
       
-      case fromActions.SubscriberActionTypes.GetSubscribersSuccess:
+      case fromActions.SubscriberActionTypes.GetSubscriptorsSuccess:
         return {
           ...state,
           subscribers: action.payload.Data,
@@ -27,24 +26,24 @@ export function SubscribersReducer(state = fromStore.initialState, action: fromA
           isLoading: false,
         };
 
-      case fromActions.SubscriberActionTypes.GetSubscriberSuccess:
+      case fromActions.SubscriberActionTypes.GetSubscriptorSuccess:
         return {
           ...state,
-          subscriber: action.payload,
+          subscriptor: action.payload,
           isLoading: false,
         };
 
-      case fromActions.SubscriberActionTypes.ClearSubscriber:
+      case fromActions.SubscriberActionTypes.ClearSubscriptor:
         return {
           ...state,
-          subscriber: null,
+          subscriptor: null,
           isLoading: false,
         };
         
-      case fromActions.SubscriberActionTypes.GetSubscribersFailure:
-      case fromActions.SubscriberActionTypes.GetSubscriberFailure:
-      case fromActions.SubscriberActionTypes.DeleteSubscriberSuccess:
-      case fromActions.SubscriberActionTypes.DeleteSubscriberFailure:
+      case fromActions.SubscriberActionTypes.GetSubscriptorsFailure:
+      case fromActions.SubscriberActionTypes.GetSubscriptorFailure:
+      case fromActions.SubscriberActionTypes.DeleteSubscriptorSuccess:
+      case fromActions.SubscriberActionTypes.DeleteSubscriptorFailure:
         return {
           ...state,
           isLoading: false,
@@ -58,13 +57,13 @@ export function SubscribersReducer(state = fromStore.initialState, action: fromA
 
 const exportLoading = (state: fromStore.SubscribersState) => state.isLoading;
 const exportSubscribers = (state: fromStore.SubscribersState) => state.subscribers;
-const exportSubscriber = (state: fromStore.SubscribersState) => state.subscriber;
+const exportSubscriber = (state: fromStore.SubscribersState) => state.subscriptor;
 const exportTotalSubscribers = (state: fromStore.SubscribersState) => state.totalSubscribers;
 const exportLastQuery = (state: fromStore.SubscribersState) => state.lastQuery;
 const selectSubscribersState = createFeatureSelector<fromStore.SubscribersState>('subscribers');
 
 export const getLoading = createSelector(selectSubscribersState, exportLoading);
-export const getSubscribers = createSelector(selectSubscribersState, exportSubscribers);
-export const getSubscriber = createSelector(selectSubscribersState, exportSubscriber);
+export const getSubscriptors = createSelector(selectSubscribersState, exportSubscribers);
+export const getSubscriptor = createSelector(selectSubscribersState, exportSubscriber);
 export const getTotalSubscribers = createSelector(selectSubscribersState, exportTotalSubscribers);
 export const getLastQuery = createSelector(selectSubscribersState, exportLastQuery);

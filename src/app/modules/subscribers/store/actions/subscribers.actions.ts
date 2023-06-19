@@ -4,125 +4,125 @@ import * as fromModels from '@app/models';
 import { HttpErrorResponse } from '@angular/common/http';
 
 export enum SubscriberActionTypes {
-  GetSubscribers = '[Subscribers] GetSubscribers',
-  GetSubscribersSuccess = '[Subscribers] GetSubscribersSuccess',
-  GetSubscribersFailure = '[Subscribers] GetSubscribersFailure',
-  GetSubscriber = '[Subscribers] GetSubscriber',
-  GetSubscriberSuccess = '[Subscribers] GetSubscriberSuccess',
-  GetSubscriberFailure = '[Subscribers] GetSubscriberFailure',
-  ClearSubscriber = '[Subscribers] ClearSubscriber',
-  CreateSubscriber = '[Subscribers] CreateSubscriber',
-  CreateSubscriberSuccess = '[Subscribers] CreateSubscriberSuccess',
-  CreateSubscriberFailure = '[Subscribers] CreateSubscriberFailure',
-  UpdateSubscriber = '[Subscribers] UpdateSubscriber',
-  UpdateSubscriberSuccess = '[Subscribers] UpdateSubscriberSuccess',
-  UpdateSubscriberFailure = '[Subscribers] UpdateSubscriberFailure',
-  DeleteSubscriber = '[Subscribers] DeleteSubscriber',
-  DeleteSubscriberSuccess = '[Subscribers] DeleteSubscriberSuccess',
-  DeleteSubscriberFailure = '[Subscribers] DeleteSubscriberFailure',
+  GetSubscriptors = '[Subscribers] GetSubscriptors',
+  GetSubscriptorsSuccess = '[Subscribers] GetSubscriptorsSuccess',
+  GetSubscriptorsFailure = '[Subscribers] GetSubscriptorsFailure',
+  GetSubscriptor = '[Subscribers] GetSubscriptor',
+  GetSubscriptorSuccess = '[Subscribers] GetSubscriptorSuccess',
+  GetSubscriptorFailure = '[Subscribers] GetSubscriptorFailure',
+  ClearSubscriptor = '[Subscribers] ClearSubscriptor',
+  CreateSubscriptor = '[Subscribers] CreateSubscriptor',
+  CreateSubscriptorSuccess = '[Subscribers] CreateSubscriptorSuccess',
+  CreateSubscriptorFailure = '[Subscribers] CreateSubscriptorFailure',
+  UpdateSubscriptor = '[Subscribers] UpdateSubscriptor',
+  UpdateSubscriptorSuccess = '[Subscribers] UpdateSubscriptorSuccess',
+  UpdateSubscriptorFailure = '[Subscribers] UpdateSubscriptorFailure',
+  DeleteSubscriptor = '[Subscribers] DeleteSubscriptor',
+  DeleteSubscriptorSuccess = '[Subscribers] DeleteSubscriptorSuccess',
+  DeleteSubscriptorFailure = '[Subscribers] DeleteSubscriptorFailure',
 }
 
-export class GetSubscribers implements Action {
-  readonly type = SubscriberActionTypes.GetSubscribers;
+export class GetSubscriptors implements Action {
+  readonly type = SubscriberActionTypes.GetSubscriptors;
 
   constructor(public payload: fromModels.Filter) {}
 }
 
-export class GetSubscribersSuccess implements Action {
-  readonly type = SubscriberActionTypes.GetSubscribersSuccess;
+export class GetSubscriptorsSuccess implements Action {
+  readonly type = SubscriberActionTypes.GetSubscriptorsSuccess;
 
-  constructor(public payload: fromModels.IResponse<fromModels.Subscriber[]>) {}
+  constructor(public payload: fromModels.IResponse<fromModels.Subscriptor[]>) {}
 }
 
-export class GetSubscribersFailure implements Action {
-  readonly type = SubscriberActionTypes.GetSubscribersFailure;
+export class GetSubscriptorsFailure implements Action {
+  readonly type = SubscriberActionTypes.GetSubscriptorsFailure;
 
   constructor(public payload: HttpErrorResponse) {}
 }
 
-export class GetSubscriber implements Action {
-  readonly type = SubscriberActionTypes.GetSubscriber;
+export class GetSubscriptor implements Action {
+  readonly type = SubscriberActionTypes.GetSubscriptor;
 
   constructor(public payload: number) {}
 }
 
-export class GetSubscriberSuccess implements Action {
-  readonly type = SubscriberActionTypes.GetSubscriberSuccess;
+export class GetSubscriptorSuccess implements Action {
+  readonly type = SubscriberActionTypes.GetSubscriptorSuccess;
 
-  constructor(public payload: fromModels.Subscriber) {}
+  constructor(public payload: fromModels.Subscriptor) {}
 }
 
-export class GetSubscriberFailure implements Action {
-  readonly type = SubscriberActionTypes.GetSubscriberFailure;
+export class GetSubscriptorFailure implements Action {
+  readonly type = SubscriberActionTypes.GetSubscriptorFailure;
 
   constructor(public payload: HttpErrorResponse) {}
 }
 
-export class ClearSubscriber implements Action {
-  readonly type = SubscriberActionTypes.ClearSubscriber;
+export class ClearSubscriptor implements Action {
+  readonly type = SubscriberActionTypes.ClearSubscriptor;
 }
 
-export class CreateSubscriber implements Action {
-  readonly type = SubscriberActionTypes.CreateSubscriber;
+export class CreateSubscriptor implements Action {
+  readonly type = SubscriberActionTypes.CreateSubscriptor;
 
-  constructor(public payload: { Subscribers: fromModels.Subscriber[] }) {}
+  constructor(public payload: { Subscribers: fromModels.Subscriptor[] }) {}
 }
 
-export class CreateSubscriberSuccess implements Action {
-  readonly type = SubscriberActionTypes.CreateSubscriberSuccess;
+export class CreateSubscriptorSuccess implements Action {
+  readonly type = SubscriberActionTypes.CreateSubscriptorSuccess;
 }
 
-export class CreateSubscriberFailure implements Action {
-  readonly type = SubscriberActionTypes.CreateSubscriberFailure;
+export class CreateSubscriptorFailure implements Action {
+  readonly type = SubscriberActionTypes.CreateSubscriptorFailure;
 
   constructor(public payload: HttpErrorResponse) {}
 }
 
-export class UpdateSubscriber implements Action {
-  readonly type = SubscriberActionTypes.UpdateSubscriber;
+export class UpdateSubscriptor implements Action {
+  readonly type = SubscriberActionTypes.UpdateSubscriptor;
 
-  constructor(public payload: Partial<fromModels.Subscriber>) {}
+  constructor(public payload: Partial<fromModels.Subscriptor>) {}
 }
 
-export class UpdateSubscriberSuccess implements Action {
-  readonly type = SubscriberActionTypes.UpdateSubscriberSuccess;
+export class UpdateSubscriptorSuccess implements Action {
+  readonly type = SubscriberActionTypes.UpdateSubscriptorSuccess;
 }
 
-export class UpdateSubscriberFailure implements Action {
-  readonly type = SubscriberActionTypes.UpdateSubscriberFailure;
+export class UpdateSubscriptorFailure implements Action {
+  readonly type = SubscriberActionTypes.UpdateSubscriptorFailure;
 
   constructor(public payload: any) {}
 }
 
-export class DeleteSubscriber implements Action {
-  readonly type = SubscriberActionTypes.DeleteSubscriber;
+export class DeleteSubscriptor implements Action {
+  readonly type = SubscriberActionTypes.DeleteSubscriptor;
 
   constructor(public payload: number) {}
 }
 
-export class DeleteSubscriberSuccess implements Action {
-  readonly type = SubscriberActionTypes.DeleteSubscriberSuccess;
+export class DeleteSubscriptorSuccess implements Action {
+  readonly type = SubscriberActionTypes.DeleteSubscriptorSuccess;
 
   constructor(public payload?: string) {}
 }
 
-export class DeleteSubscriberFailure implements Action {
-  readonly type = SubscriberActionTypes.DeleteSubscriberFailure;
+export class DeleteSubscriptorFailure implements Action {
+  readonly type = SubscriberActionTypes.DeleteSubscriptorFailure;
 
   constructor(public payload: HttpErrorResponse) {}
 }
 
 export type SubscribersActions =
-  | GetSubscribers
-  | GetSubscribersSuccess
-  | GetSubscribersFailure
-  | UpdateSubscriber
-  | UpdateSubscriberSuccess
-  | UpdateSubscriberFailure
-  | DeleteSubscriber
-  | DeleteSubscriberSuccess
-  | DeleteSubscriberFailure
-  | GetSubscriber
-  | GetSubscriberSuccess
-  | GetSubscriberFailure
-  | ClearSubscriber;
+  | GetSubscriptor
+  | GetSubscriptorSuccess
+  | GetSubscriptorFailure
+  | ClearSubscriptor
+  | GetSubscriptors
+  | GetSubscriptorsSuccess
+  | GetSubscriptorsFailure
+  | UpdateSubscriptor
+  | UpdateSubscriptorSuccess
+  | UpdateSubscriptorFailure
+  | DeleteSubscriptor
+  | DeleteSubscriptorSuccess
+  | DeleteSubscriptorFailure;

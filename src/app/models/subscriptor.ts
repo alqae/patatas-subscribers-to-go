@@ -1,4 +1,4 @@
-export class Subscriber {
+export class Subscriptor {
   constructor(
     public Id: number,
     public Area: string,

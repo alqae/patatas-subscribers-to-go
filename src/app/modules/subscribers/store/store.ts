@@ -2,15 +2,15 @@ import * as fromModels from '@app/models';
 
 export interface SubscribersState {
   isLoading: boolean;
-  subscribers: fromModels.Subscriber[];
+  subscribers: fromModels.Subscriptor[];
   totalSubscribers: number;
-  subscriber: fromModels.Subscriber | null;
+  subscriptor: fromModels.Subscriptor | null;
   lastQuery?: fromModels.Filter;
 }
 
 export const initialState: SubscribersState = {
   isLoading: false,
   subscribers: [],
-  subscriber: null,
+  subscriptor: null,
   totalSubscribers: 0,
 };

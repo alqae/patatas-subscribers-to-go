@@ -1,7 +1,7 @@
-import { SubscriberService } from "./subscriber.service";
+import { SubscriptorService } from "./subscriptor.service";
 
 export const services = [
-  SubscriberService,
+  SubscriptorService,
 ];
 
-export * from './subscriber.service';
+export * from './subscriptor.service';

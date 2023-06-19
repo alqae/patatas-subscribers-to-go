@@ -29,21 +29,21 @@ export class AllSubscribersComponent {
   searchControl = new FormControl('');
   
   totalSubscribers = 0;
-  subscribers: fromModels.Subscriber[] = [];
+  subscribers: fromModels.Subscriptor[] = [];
 
   dataSource = new MatTableDataSource(this.subscribers);
 
   constructor(
-    private _storeSubscriber: Store<fromStoreSubscriber.SubscribersState>,
+    private _storeSubscribers: Store<fromStoreSubscriber.SubscribersState>,
   ) {
-    this.isLoading$ = this._storeSubscriber.select(fromStoreSubscriber.getLoading);
-    this._storeSubscriber.dispatch(new fromStoreSubscriber.GetSubscribers({
+    this.isLoading$ = this._storeSubscribers.select(fromStoreSubscriber.getLoading);
+    this._storeSubscribers.dispatch(new fromStoreSubscriber.GetSubscriptors({
       count: this.pageSize,
       page: this.pageIndex + 1,
     }));
-    this._storeSubscriber.select(fromStoreSubscriber.getTotalSubscribers)
+    this._storeSubscribers.select(fromStoreSubscriber.getTotalSubscribers)
       .subscribe((totalSubscribers) => this.totalSubscribers = totalSubscribers);
-    this._storeSubscriber.select(fromStoreSubscriber.getSubscribers)
+    this._storeSubscribers.select(fromStoreSubscriber.getSubscriptors)
       .subscribe((subscribers) => {
         this.subscribers = subscribers;
         this.dataSource.data = subscribers;
@@ -51,32 +51,32 @@ export class AllSubscribersComponent {
 
     this.searchControl.valueChanges
       .subscribe((value) => {
-        this._storeSubscriber.dispatch(new fromStoreSubscriber.GetSubscribers(this.getFilters()));
+        this._storeSubscribers.dispatch(new fromStoreSubscriber.GetSubscriptors(this.getFilters()));
       });
   }
 
   handlePageEvent(event: PageEvent) {
     this.pageSize = event.pageSize;
     this.pageIndex = event.pageIndex;
-    this._storeSubscriber.dispatch(new fromStoreSubscriber.GetSubscribers(this.getFilters()));
+    this._storeSubscribers.dispatch(new fromStoreSubscriber.GetSubscriptors(this.getFilters()));
   }
 
   announceSortChange(event: Sort) {
     this.sortOrder = event.active;
     this.sortType = event.direction === 'asc' ? 1 : 0;
-    this._storeSubscriber.dispatch(new fromStoreSubscriber.GetSubscribers(this.getFilters()));
+    this._storeSubscribers.dispatch(new fromStoreSubscriber.GetSubscriptors(this.getFilters()));
   }
 
-  deleteSubscriber(subscriberId: number) {
-    this._storeSubscriber.dispatch(new fromStoreSubscriber.DeleteSubscriber(subscriberId));
+  DeleteSubscriptor(subscriberId: number) {
+    this._storeSubscribers.dispatch(new fromStoreSubscriber.DeleteSubscriptor(subscriberId));
   }
 
   goToDetail(subscriberId: number) {
-    return this._storeSubscriber.dispatch(new fromStoreCore.Go({  path: ['subscribers', subscriberId] }))
+    return this._storeSubscribers.dispatch(new fromStoreCore.Go({  path: ['subscribers', subscriberId] }))
   }
 
   goToCreate() {
-    return this._storeSubscriber.dispatch(new fromStoreCore.Go({  path: ['subscribers', 'create'] }))
+    return this._storeSubscribers.dispatch(new fromStoreCore.Go({  path: ['subscribers', 'create'] }))
   }
 
   getFilters(): fromModels.Filter {
