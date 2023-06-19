@@ -34,6 +34,10 @@ export class SubscriberService {
     return this._http.get<fromModels.Subscriber>(`${this._url}/subscribers/${subscriberId}`);
   }
 
+  createSubscriber(subscriber: { Subscribers: fromModels.Subscriber[] }): Observable<fromModels.IResponse<string>> {
+    return this._http.post<fromModels.IResponse<string>>(`${this._url}/subscribers`, subscriber);
+  }
+
   updateSubscriber(subscriber: Partial<fromModels.Subscriber>): Observable<fromModels.IResponse<string>> {
     return this._http.put<fromModels.IResponse<string>>(`${this._url}/subscribers/${subscriber.Id}`, subscriber);
   }

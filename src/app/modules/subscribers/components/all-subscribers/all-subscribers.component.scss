@@ -1,21 +1,26 @@
-.subscribers-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
+.subscribers {
+  padding: 20px 30px;
+  margin-bottom: 30px;
 
-.subscribers-table {
-  tr td:last-of-type,
-  tr td:first-of-type {
-    width: 0;
+  &-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
   }
-
-  tr td:nth-child(2) {
-    width: 100%;
-  }
-
-  tr td {
-    white-space: nowrap;
+  
+  &-table {
+    tr td:last-of-type,
+    tr td:first-of-type {
+      width: 0;
+    }
+  
+    tr td:nth-child(2) {
+      width: 100%;
+    }
+  
+    tr td {
+      white-space: nowrap;
+    }
   }
 }

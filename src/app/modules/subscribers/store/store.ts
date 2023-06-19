@@ -1,10 +1,11 @@
-import { Subscriber } from '@app/models/subscriber';
+import * as fromModels from '@app/models';
 
 export interface SubscribersState {
   isLoading: boolean;
-  subscribers: Subscriber[];
+  subscribers: fromModels.Subscriber[];
   totalSubscribers: number;
-  subscriber: Subscriber | null;
+  subscriber: fromModels.Subscriber | null;
+  lastQuery?: fromModels.Filter;
 }
 
 export const initialState: SubscribersState = {

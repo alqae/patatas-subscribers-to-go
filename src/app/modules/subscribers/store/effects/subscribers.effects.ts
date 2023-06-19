@@ -57,6 +57,30 @@ export class SubscribersEffects {
     )
   });
 
+  createSubscriber$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromActions.SubscriberActionTypes.CreateSubscriber),
+      map((action: fromActions.CreateSubscriber) => action.payload),
+      exhaustMap((payload) => {
+        return this._service.createSubscriber(payload).pipe(
+          map((response) => new fromActions.CreateSubscriberSuccess()),
+          catchError(error => of(new fromActions.CreateSubscriberFailure(error)))
+        )}
+      )
+    )
+  });
+
+  createSubscriberSuccess$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromActions.SubscriberActionTypes.CreateSubscriberSuccess),
+      tap(() => {
+        this._snackBar.open('Subscriber created successfully', 'Close', {
+          duration: 2000,
+        });
+      })
+    )
+  }, { dispatch: false });
+
   updateSubscriber$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromActions.SubscriberActionTypes.UpdateSubscriber),
@@ -89,7 +113,8 @@ export class SubscribersEffects {
     return this.actions$.pipe(
       ofType(fromActions.SubscriberActionTypes.DeleteSubscriber),
       map((action: fromActions.DeleteSubscriber) => action.payload),
-      tap((payload) => {
+      withLatestFrom(this._store.select(fromReducers.getLastQuery)),
+      tap(([payload, lastQuery]) => {
         this._utils.showDialog({
           width: '350px',
           data: {
@@ -99,7 +124,7 @@ export class SubscribersEffects {
               this._service.deleteSubscriber(payload).subscribe({
                 next: (response) => {
                   this._store.dispatch(new fromActions.DeleteSubscriberSuccess(response.message));
-                  this._store.dispatch(new fromActions.GetSubscribers({}))
+                  this._store.dispatch(new fromActions.GetSubscribers(lastQuery ?? {}))
                 },
                 error: (error) => {
                   this._store.dispatch(new fromActions.DeleteSubscriberFailure(error));

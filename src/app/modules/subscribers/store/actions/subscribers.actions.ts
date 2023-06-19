@@ -62,23 +62,21 @@ export class ClearSubscriber implements Action {
   readonly type = SubscriberActionTypes.ClearSubscriber;
 }
 
-// export class CreateSubscriber implements Action {
-//   readonly type = SubscriberActionTypes.CreateSubscriber;
+export class CreateSubscriber implements Action {
+  readonly type = SubscriberActionTypes.CreateSubscriber;
 
-//   constructor(public payload: any) {}
-// }
+  constructor(public payload: { Subscribers: fromModels.Subscriber[] }) {}
+}
 
-// export class CreateSubscriberSuccess implements Action {
-//   readonly type = SubscriberActionTypes.CreateSubscriberSuccess;
+export class CreateSubscriberSuccess implements Action {
+  readonly type = SubscriberActionTypes.CreateSubscriberSuccess;
+}
 
-//   constructor(public payload: any) {}
-// }
+export class CreateSubscriberFailure implements Action {
+  readonly type = SubscriberActionTypes.CreateSubscriberFailure;
 
-// export class CreateSubscriberFailure implements Action {
-//   readonly type = SubscriberActionTypes.CreateSubscriberFailure;
-
-//   constructor(public payload: any) {}
-// }
+  constructor(public payload: HttpErrorResponse) {}
+}
 
 export class UpdateSubscriber implements Action {
   readonly type = SubscriberActionTypes.UpdateSubscriber;

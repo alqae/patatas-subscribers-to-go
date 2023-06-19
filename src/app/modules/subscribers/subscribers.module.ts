@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { SubscribersRoutingModule } from './subscribers-routing.module';
-import * as fromComponents from './components';
-import { SharedModule } from '@app/shared';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { SubscribersRoutingModule } from './subscribers-routing.module';
+import { SharedModule } from '@app/shared';
+
+import * as fromComponents from './components';
 
 @NgModule({
   declarations: [

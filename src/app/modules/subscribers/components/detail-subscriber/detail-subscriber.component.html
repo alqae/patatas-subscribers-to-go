@@ -31,7 +31,7 @@
 
     <mat-card-content>
       <ng-container *ngIf="isEditing;else NotIsEditing">
-        <form [formGroup]="subscriberForm" (ngSubmit)="save()" class="detail-subscriber-form pt-10">
+        <form [formGroup]="updateSubscriberForm" (ngSubmit)="save()" class="detail-subscriber-form pt-10">
           <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput formControlName="Name">
@@ -53,26 +53,7 @@
             </mat-error>
           </mat-form-field>
       
-          <mat-form-field appearance="outline">
-            <mat-label>Country</mat-label>
-            <mat-select
-              [value]="subscriber.CountryCode"
-              formControlName="Country"
-              msInfiniteScroll
-              (infiniteScroll)="getNextCountries()"
-              [complete]="countries.length == totalCountries"
-            >
-              <mat-option>
-                <ngx-mat-select-search [formControl]="filterCountriesControl"></ngx-mat-select-search>
-              </mat-option>
-              <mat-option *ngFor="let country of countries" [value]="country.Code">{{country.Name}}</mat-option>
-            </mat-select>
-            <mat-icon matSuffix>language</mat-icon>
-
-            <mat-error *ngIf="getField('Country')?.hasError('required')">
-              This field is required
-            </mat-error>
-          </mat-form-field>
+          <app-select-countries [control]="getField('Country')"></app-select-countries>
       
           <mat-form-field appearance="outline">
             <mat-label>PhoneNumber</mat-label>
@@ -150,6 +131,7 @@
         mat-button
         color="primary"
         (click)="save()"
+        [disabled]="updateSubscriberForm.invalid"
       >
         <mat-icon>save</mat-icon>Save
       </button>

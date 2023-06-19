@@ -5,6 +5,7 @@ import * as fromComponents from './components';
 
 const routes: Routes = [
   { path: '', component: fromComponents.AllSubscribersComponent },
+  { path: 'create', component: fromComponents.CreateSubscriberComponent },
   { path: ':id', component: fromComponents.DetailSubscriberComponent },
   { path: '**', redirectTo: '' },
 ];

@@ -1,0 +1,19 @@
+<mat-form-field appearance="outline">
+  <mat-label>Country</mat-label>
+  <mat-select
+    [formControl]="control"
+    msInfiniteScroll
+    (infiniteScroll)="getNextCountries()"
+    [complete]="countries.length == totalCountries"
+  >
+    <mat-option>
+      <ngx-mat-select-search placeholderLabel="Search..." [formControl]="filterCountriesControl"></ngx-mat-select-search>
+    </mat-option>
+    <mat-option *ngFor="let country of countries" [value]="country.Code">{{country.Name}}</mat-option>
+  </mat-select>
+  <mat-icon matSuffix>language</mat-icon>
+
+  <mat-error *ngIf="control.hasError('required')">
+    This field is required
+  </mat-error>
+</mat-form-field>

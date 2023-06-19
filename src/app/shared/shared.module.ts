@@ -1,27 +1,30 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MaterialModule } from './material/material.module';
 
 import * as fromServices from './services';
-import { DialogComponent } from './components/dialog/dialog.component';
+import * as fromComponents from './components';
 
 @NgModule({
   declarations: [
-    DialogComponent
+    ...fromComponents.components,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   exports: [
     MaterialModule,
     FormsModule,
     HttpClientModule,
+    ...fromComponents.components,
   ],
   providers: [
     ...fromServices.services,

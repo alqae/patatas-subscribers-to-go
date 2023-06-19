@@ -16,31 +16,16 @@ import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/fo
 export class DetailSubscriberComponent implements OnInit, OnDestroy {
   subscriberId: string | null = null;
   subscriber?: fromModels.Subscriber;
-  
-  // Countries
-  countries: fromModels.Country[] = [];
-  currentPageCountries = 1;
-  filterCountriesControl = new FormControl('');
-  totalCountries = 0;
-  
+
   isEditing = false;
-  subscriberForm: FormGroup;
+  updateSubscriberForm: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
     private _store: Store<fromStore.SubscribersState>,
     private _utilsService: fromServicesShared.UtilsService,
   ) {
-    this.getCountries();
-
-    this.filterCountriesControl.valueChanges.subscribe((value) => {
-      this.currentPageCountries = 1;
-      if (value) {
-        this.getCountries(value);
-      }
-    });
-
-    this.subscriberForm = new FormGroup({
+    this.updateSubscriberForm = new FormGroup({
       Name: new FormControl('', [Validators.required]),
       Email: new FormControl('', [Validators.required, Validators.email]),
       Country: new FormControl('', [Validators.required]),
@@ -81,7 +66,7 @@ export class DetailSubscriberComponent implements OnInit, OnDestroy {
 
   edit() {
     this.isEditing = true;
-    this.subscriberForm.patchValue({
+    this.updateSubscriberForm.patchValue({
       Name: this.subscriber?.Name,
       Email: this.subscriber?.Email,
       Country: this.subscriber?.CountryCode,
@@ -93,43 +78,27 @@ export class DetailSubscriberComponent implements OnInit, OnDestroy {
 
   reset() {
     this.isEditing = false;
-    this.filterCountriesControl.reset();
-    this.subscriberForm.reset();
+    this.updateSubscriberForm.reset();
   }
 
   save() {
-    if (this.subscriberForm.dirty && this.subscriberForm.valid) {
+    if (this.updateSubscriberForm.dirty && this.updateSubscriberForm.valid) {
       this._store.dispatch(new fromStore.UpdateSubscriber({
         Id: Number(this.subscriberId),
-        Name: this.subscriberForm.value.Name,
-        Email: this.subscriberForm.value.Email,
-        CountryCode: this.subscriberForm.value.Country,
-        PhoneNumber: this.subscriberForm.value.PhoneNumber,
-        Area: this.subscriberForm.value.Area,
-        JobTitle: this.subscriberForm.value.JobTitle,
+        Name: this.updateSubscriberForm.value.Name,
+        Email: this.updateSubscriberForm.value.Email,
+        CountryCode: this.updateSubscriberForm.value.Country,
+        PhoneNumber: this.updateSubscriberForm.value.PhoneNumber,
+        Area: this.updateSubscriberForm.value.Area,
+        JobTitle: this.updateSubscriberForm.value.JobTitle,
         Topics: [],
       }));
+
+      this.reset();
     }
   }
 
-  getCountries(criteria?: string) {
-    this._utilsService.getCountries({ criteria, page: this.currentPageCountries })
-      .subscribe((response) => {
-        this.totalCountries = response.Count;
-        this.countries = response.Data;
-      });
-  }
-
-  getNextCountries() {
-    this._utilsService.getCountries({ page: this.currentPageCountries + 1 })
-      .subscribe((response) => {
-        this.totalCountries = response.Count;
-        this.countries = [...this.countries, ...response.Data];
-        this.currentPageCountries++;
-      });
-  }
-
-  getField(field: string): AbstractControl | null {
-    return this.subscriberForm.get(field);
+  getField(field: string): FormControl {
+    return this.updateSubscriberForm.get(field) as FormControl;
   }
 }

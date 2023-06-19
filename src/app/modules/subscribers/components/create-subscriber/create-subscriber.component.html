@@ -1,0 +1,108 @@
+  <div class="mb-20">
+    <button mat-button (click)="goBack()"><mat-icon>arrow_back</mat-icon>Go back</button>
+  </div>
+
+<form
+  *ngFor="let subscriptorForm of subscriptorsForm.controls"
+  [formGroup]="subscriptorForm"
+  (ngSubmit)="save(subscriptorForm)"
+  class="mat-elevation-z10 pt-20"
+  [ngClass]="{'mb-30': subscriptorsForm.length > 1}"
+>
+  <mat-card>
+    <mat-card-content class="create-subscriber-form">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="Name">
+        <mat-icon matSuffix>badge</mat-icon>
+        <mat-error *ngIf="getField(subscriptorForm, 'Name')?.hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="Email">
+        <mat-icon matSuffix>mail</mat-icon>
+        <mat-error *ngIf="getField(subscriptorForm, 'Email')?.hasError('required')">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="!getField(subscriptorForm, 'Email')?.hasError('required') && getField(subscriptorForm, 'Email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+  
+      <app-select-countries [control]="getField(subscriptorForm, 'Country')"></app-select-countries>
+
+      <mat-form-field appearance="outline">
+        <mat-label>PhoneNumber</mat-label>
+        <input matInput formControlName="PhoneNumber">
+        <mat-icon matSuffix>call</mat-icon>
+        <mat-error *ngIf="getField(subscriptorForm, 'PhoneNumber')?.hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>Area</mat-label>
+        <input matInput formControlName="Area">
+        <mat-icon matSuffix>edit</mat-icon>
+        <mat-error *ngIf="getField(subscriptorForm, 'Area')?.hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field appearance="outline">
+        <mat-label>JobTitle</mat-label>
+        <input matInput formControlName="JobTitle">
+        <mat-icon matSuffix>work</mat-icon>
+        <mat-error *ngIf="getField(subscriptorForm, 'JobTitle')?.hasError('required')">
+          This field is required
+        </mat-error>
+      </mat-form-field>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button
+        mat-button
+        color="warn"
+        type="button"
+        *ngIf="subscriptorsForm.length > 1"
+        (click)="removeSubscriptor(subscriptorForm)"
+      >
+        <mat-icon>delete</mat-icon>Delete
+      </button>
+
+      <button
+        mat-button
+        color="primary"
+        type="submit"
+        [disabled]="subscriptorForm.invalid"
+      >
+        <mat-icon>save</mat-icon>Save
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+
+<div class="mt-20">
+  <button
+    extended
+    mat-raised-button
+    color="primary"
+    (click)="addSubscriptor()"
+  >
+    <mat-icon>add</mat-icon>Add subscriber
+  </button>
+
+  <button
+    extended
+    mat-raised-button
+    color="accent"
+    class="mt-10"
+    (click)="saveAll()"
+    [disabled]="subscriptorsForm.invalid"
+  >
+    <mat-icon>save</mat-icon>Save all
+  </button>
+</div>
