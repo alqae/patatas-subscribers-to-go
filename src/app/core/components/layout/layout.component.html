@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" *ngIf="isLoggedIn">
+<mat-toolbar color="primary" *ngIf="isLoggedIn$ | async">
   <header>
     <label>My Application</label>
 
@@ -6,9 +6,24 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item [mat-menu-trigger-for]="languages">
+        <mat-icon>language</mat-icon>
+        <span>{{'menu-languages'|translate}}</span>
+      </button>
+      
       <button mat-menu-item (click)="logout()">
         <mat-icon>logout</mat-icon>
-        <span>Log out</span>
+        <span>{{'menu-logout'|translate}}</span>
+      </button>
+    </mat-menu>
+
+    <mat-menu #languages="matMenu">
+      <button mat-menu-item (click)="setLanguage('en')">
+        <span>{{'menu-languages-en'|translate}}</span>
+      </button>
+
+      <button mat-menu-item (click)="setLanguage('es')">
+        <span>{{'menu-languages-es'|translate}}</span>
       </button>
     </mat-menu>
   </header>

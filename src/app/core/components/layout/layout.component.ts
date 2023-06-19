@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStoreLogin from '@login/store';
+import * as fromStoreShared from '@shared/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-layout',
@@ -10,24 +12,24 @@ import * as fromStoreLogin from '@login/store';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
-  @ViewChild('sidenav') sidenav?: MatSidenav;
-
-  public isLoggedIn = false;
+  public isLoggedIn$: Observable<boolean>;
 
   constructor(
     private _storeLogin: Store<fromStoreLogin.LoginState>,
+    private _storeShared: Store<fromStoreShared.SharedState>,
+    private _translate: TranslateService,
   ) {
-    this._storeLogin.select(fromStoreLogin.getLoggedIn)
-      .subscribe((isLoggedIn) => {
-        this.isLoggedIn = isLoggedIn;
-      });
+    this._storeShared.select(fromStoreShared.getLanguage)
+      .subscribe((language) => this._translate.setDefaultLang(language));
+    this.isLoggedIn$ = this._storeLogin.select(fromStoreLogin.getLoggedIn);
   }
+
 
   logout() {
     this._storeLogin.dispatch(new fromStoreLogin.Logout());
   }
 
-  clickHandler() {
-    this.sidenav?.close();
+  setLanguage(lang: string) {
+    this._storeShared.dispatch(new fromStoreShared.setLanguage(lang));
   }
 }

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './components';
 import { SharedModule } from '@app/shared';
+
 import * as fromServices from './services';
 
 @NgModule({
@@ -16,7 +17,7 @@ import * as fromServices from './services';
     LoginRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     ...fromServices.services,

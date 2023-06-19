@@ -1,5 +1,8 @@
   <div class="mb-20">
-    <button mat-button (click)="goBack()"><mat-icon>arrow_back</mat-icon>Go back</button>
+    <button mat-button (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      {{'actions-go-back'|translate}}
+    </button>
   </div>
 
 <form
@@ -12,52 +15,52 @@
   <mat-card>
     <mat-card-content class="create-subscriptor-form">
       <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
+        <mat-label>{{'field-label-name'|translate}}</mat-label>
         <input matInput formControlName="Name">
         <mat-icon matSuffix>badge</mat-icon>
         <mat-error *ngIf="getField(subscriptorForm, 'Name')?.hasError('required')">
-          This field is required
+          {{'field-error-name-required'|translate}}
         </mat-error>
       </mat-form-field>
   
       <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
+        <mat-label>{{'field-label-email'|translate}}</mat-label>
         <input matInput formControlName="Email">
         <mat-icon matSuffix>mail</mat-icon>
         <mat-error *ngIf="getField(subscriptorForm, 'Email')?.hasError('required')">
-          This field is required
+          {{'field-error-email-required'|translate}}
         </mat-error>
         <mat-error *ngIf="!getField(subscriptorForm, 'Email')?.hasError('required') && getField(subscriptorForm, 'Email')?.hasError('email')">
-          Please enter a valid email address
+          {{'field-error-email-invalid'|translate}}
         </mat-error>
       </mat-form-field>
   
       <app-select-countries [control]="getField(subscriptorForm, 'Country')"></app-select-countries>
 
       <mat-form-field appearance="outline">
-        <mat-label>PhoneNumber</mat-label>
+        <mat-label>{{'field-label-phone'|translate}}</mat-label>
         <input matInput formControlName="PhoneNumber">
         <mat-icon matSuffix>call</mat-icon>
         <mat-error *ngIf="getField(subscriptorForm, 'PhoneNumber')?.hasError('required')">
-          This field is required
+          {{'field-error-phone-required'|translate}}
         </mat-error>
       </mat-form-field>
   
       <mat-form-field appearance="outline">
-        <mat-label>Area</mat-label>
+        <mat-label>{{'field-label-area'|translate}}</mat-label>
         <input matInput formControlName="Area">
         <mat-icon matSuffix>edit</mat-icon>
         <mat-error *ngIf="getField(subscriptorForm, 'Area')?.hasError('required')">
-          This field is required
+          {{'field-error-area-required'|translate}}
         </mat-error>
       </mat-form-field>
   
       <mat-form-field appearance="outline">
-        <mat-label>JobTitle</mat-label>
+        <mat-label>{{'field-label-job-title'|translate}}</mat-label>
         <input matInput formControlName="JobTitle">
         <mat-icon matSuffix>work</mat-icon>
         <mat-error *ngIf="getField(subscriptorForm, 'JobTitle')?.hasError('required')">
-          This field is required
+          {{'field-error-job-title-required'|translate}}
         </mat-error>
       </mat-form-field>
     </mat-card-content>
@@ -79,7 +82,8 @@
         type="submit"
         [disabled]="subscriptorForm.invalid"
       >
-        <mat-icon>save</mat-icon>Save
+        <mat-icon>save</mat-icon>
+        {{'actions-save'|translate}}
       </button>
     </mat-card-actions>
   </mat-card>
@@ -92,7 +96,8 @@
     color="primary"
     (click)="addSubscriptor()"
   >
-    <mat-icon>add</mat-icon>Add subscriptor
+    <mat-icon>add</mat-icon>
+    {{'create-subscriptor-actions-add'|translate}}
   </button>
 
   <button
@@ -103,6 +108,7 @@
     (click)="saveAll()"
     [disabled]="subscriptorsForm.invalid"
   >
-    <mat-icon>save</mat-icon>Save all
+    <mat-icon>save</mat-icon>
+    {{'create-subscriptor-actions-save-all'|translate}}
   </button>
 </div>

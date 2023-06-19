@@ -10,6 +10,7 @@ import * as fromReducers from '../reducers/subscribers.reducer';
 import * as fromServicesShared from '@shared/services';
 import * as fromServices from '../../services';
 import * as fromStore from '../store';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class SubscribersEffects {
@@ -73,10 +74,9 @@ export class SubscribersEffects {
   CreateSubscriptorSuccess$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromActions.SubscriberActionTypes.CreateSubscriptorSuccess),
-      tap(() => {
-        this._snackBar.open('Subscriptor created successfully', 'Close', {
-          duration: 2000,
-        });
+      withLatestFrom(this._translate.get('create-subscriptor-message-successfully')),
+      tap(([_, message]) => {
+        this._snackBar.open(message, 'Close', { duration: 3000 });
       })
     )
   }, { dispatch: false });
@@ -87,7 +87,7 @@ export class SubscribersEffects {
       map((action: fromActions.UpdateSubscriptor) => action.payload),
       exhaustMap((payload) => {
         return this._service.UpdateSubscriptor(payload).pipe(
-          map((response) => new fromActions.UpdateSubscriptorSuccess()),
+          map((_) => new fromActions.UpdateSubscriptorSuccess()),
           catchError(error => of(new fromActions.UpdateSubscriptorFailure(error)))
         )}
       )
@@ -97,14 +97,15 @@ export class SubscribersEffects {
   UpdateSubscriptorSuccess$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromActions.SubscriberActionTypes.UpdateSubscriptorSuccess),
-      withLatestFrom(this._store.select(fromReducers.getSubscriptor)),
-      tap(([_, subscriptor]) => {
+      withLatestFrom(
+        this._store.select(fromReducers.getSubscriptor),
+        this._translate.get('update-subscriptor-message-successfully')
+      ),
+      tap(([_, subscriptor, message]) => {
         if (subscriptor) {
           this._store.dispatch(new fromActions.GetSubscriptor(subscriptor.Id));
         }
-        this._snackBar.open('Subscriptor updated successfully', 'Close', {
-          duration: 3000,
-        });
+        this._snackBar.open(message, 'Close', { duration: 3000 });
       })
     )
   }, { dispatch: false });
@@ -171,6 +172,7 @@ export class SubscribersEffects {
     private _store: Store<fromStore.SubscribersState>,
     private _service: fromServices.SubscriptorService,
     private _utils: fromServicesShared.UtilsService,
+    private _translate: TranslateService,
     private _snackBar: MatSnackBar,
   ) {}
 }

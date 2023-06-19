@@ -1,7 +1,10 @@
 <ng-container *ngIf="subscriptor;else noSubscriptor">
   <mat-card>
     <mat-card-actions class="detail-subscriptor-actions">
-      <button mat-button (click)="goBack()"><mat-icon>arrow_back</mat-icon>Go back</button>
+      <button mat-button (click)="goBack()">
+        <mat-icon>arrow_back</mat-icon>
+        {{'actions-go-back'|translate}}
+      </button>
 
       <div>
         <button
@@ -10,7 +13,8 @@
           (click)="edit()"
           *ngIf="!isEditing"
         >
-          <mat-icon>edit</mat-icon>Edit
+          <mat-icon>edit</mat-icon>
+          {{'actions-edit'|translate}}
         </button>
 
         <button
@@ -18,49 +22,48 @@
           color="warn"
           (click)="DeleteSubscriptor()"
         >
-          <mat-icon>delete</mat-icon>Delete
+          <mat-icon>delete</mat-icon>
+          {{'actions-delete'|translate}}
         </button>
       </div>
     </mat-card-actions>
 
     <mat-card-title class="ml-20">
-      <span class="mr-10">Subscriptor</span>
-      <span class="mr-10">-</span>
-      <span class="mr-10">{{ subscriptor.Id }}</span>
+      <span>{{'detail-subscriptor-title'|translate:({value:subscriptor.Id})}}</span>
     </mat-card-title>
 
     <mat-card-content>
       <ng-container *ngIf="isEditing;else NotIsEditing">
         <form [formGroup]="updateSubscriptorForm" (ngSubmit)="save()" class="detail-subscriptor-form pt-10">
           <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
+            <mat-label>{{'fields-label-name'|translate}}</mat-label>
             <input matInput formControlName="Name">
             <mat-icon matSuffix>badge</mat-icon>
             <mat-error *ngIf="getField('Name')?.hasError('required')">
-              This field is required
+              {{'field-error-name-required'|translate}}
             </mat-error>
           </mat-form-field>
       
           <mat-form-field appearance="outline">
-            <mat-label>Email</mat-label>
+            <mat-label>{{'fields-label-email'|translate}}</mat-label>
             <input matInput formControlName="Email">
             <mat-icon matSuffix>mail</mat-icon>
             <mat-error *ngIf="getField('Email')?.hasError('required')">
-              This field is required
+              {{'field-error-email-required'|translate}}
             </mat-error>
             <mat-error *ngIf="!getField('Email')?.hasError('required') && getField('Email')?.hasError('email')">
-              Please enter a valid email address
+              {{'field-error-email-invalid'|translate}}
             </mat-error>
           </mat-form-field>
       
           <app-select-countries [control]="getField('Country')"></app-select-countries>
       
           <mat-form-field appearance="outline">
-            <mat-label>PhoneNumber</mat-label>
+            <mat-label>{{'fields-label-phone'|translate}}</mat-label>
             <input matInput formControlName="PhoneNumber">
             <mat-icon matSuffix>call</mat-icon>
             <mat-error *ngIf="getField('PhoneNumber')?.hasError('required')">
-              This field is required
+              {{'field-error-phone-required'|translate}}
             </mat-error>
           </mat-form-field>
       
@@ -69,16 +72,16 @@
             <input matInput formControlName="Area">
             <mat-icon matSuffix>edit</mat-icon>
             <mat-error *ngIf="getField('Area')?.hasError('required')">
-              This field is required
+              {{'field-error-area-required'|translate}}
             </mat-error>
           </mat-form-field>
       
           <mat-form-field appearance="outline">
-            <mat-label>JobTitle</mat-label>
+            <mat-label>{{'fields-label-job-title'|translate}}</mat-label>
             <input matInput formControlName="JobTitle">
             <mat-icon matSuffix>work</mat-icon>
             <mat-error *ngIf="getField('JobTitle')?.hasError('required')">
-              This field is required
+              {{'field-error-job-title-required'|translate}}
             </mat-error>
           </mat-form-field>
         </form>
@@ -87,17 +90,17 @@
       <ng-template #NotIsEditing>
         <mat-list>
           <mat-list-item>
-            <span matListItemTitle>Name</span>
+            <span matListItemTitle>{{'label-name'|translate}}</span>
             <span matLine>{{ subscriptor.Name }}</span>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Email</span>
+            <span matListItemTitle>{{'label-email'|translate}}</span>
             <span matLine>{{ subscriptor.Email }}</span>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Country</span>
+            <span matListItemTitle>{{'label-country'|translate}}</span>
             <span matLine>
               {{ subscriptor.CountryCode }}
               <ng-container *ngIf="subscriptor.CountryName">- {{ subscriptor.CountryName }}</ng-container>
@@ -105,17 +108,17 @@
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>PhoneNumber</span>
+            <span matListItemTitle>{{'label-phone'|translate}}</span>
             <span matLine>{{ subscriptor.PhoneNumber }}</span>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>Area</span>
+            <span matListItemTitle>{{'label-area'|translate}}</span>
             <span matLine>{{ subscriptor.Area }}</span>
           </mat-list-item>
 
           <mat-list-item>
-            <span matListItemTitle>JobTitle</span>
+            <span matListItemTitle>{{'label-job-title'|translate}}</span>
             <span matLine>{{ subscriptor.JobTitle }}</span>
           </mat-list-item>
         </mat-list>
@@ -127,7 +130,8 @@
         mat-button
         (click)="reset()"
       >
-        <mat-icon>cancel</mat-icon>Cancel
+        <mat-icon>cancel</mat-icon>
+        {{'actions-cancel'|translate}}
       </button>
   
       <button
@@ -136,7 +140,8 @@
         (click)="save()"
         [disabled]="updateSubscriptorForm.invalid"
       >
-        <mat-icon>save</mat-icon>Save
+        <mat-icon>save</mat-icon>
+        {{'actions-save'|translate}}
       </button>
     </mat-card-actions>
   </mat-card>
@@ -144,9 +149,8 @@
 
 <ng-template #noSubscriptor>
   <div class="alert alert-danger" role="alert">
-    <h4 class="alert-heading">No subscriptor found!</h4>
-    <p>There is no subscriptor with the id {{subscriptorId}}.</p>
-    <p class="mb-10">Please try again.</p>
-    <button mat-raised-button color="primary" (click)="goBack()">Go back</button>
+    <h4 class="alert-heading">{{'detail-subscriptor-text-not-found'|translate:({value:subscriptorId})}}</h4>
+    <p class="mb-10">{{'detail-subscriptor-text-try-again'|translate}}</p>
+    <button mat-raised-button color="primary" (click)="goBack()">{{'actions-go-back'|translate}}</button>
   </div>
 </ng-template>

@@ -1,14 +1,23 @@
-import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import {
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpErrorResponse
+} from '@angular/common/http';
 
 import * as fromStoreLogin from '@login/store';
-import { Injectable } from '@angular/core';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  UNAUTHORIZED_CODE = 401;
+  UNAUTHORIZED_MESSAGE = 'Your session has expired. Please login again.';
+
+  intercept<T>(request: HttpRequest<T>, next: HttpHandler): Observable<HttpEvent<T>> {
     return next.handle(request)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -22,18 +31,16 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             errorMsg = `Error Code: ${error.status},  Message: ${error.message}`;
           }
 
-          if (error.status === 401) {
+          if (error.status === this.UNAUTHORIZED_CODE) {
             this._storeLogin.dispatch(new fromStoreLogin.Logout());
-            return throwError('Your session has expired. Please login again.');
+            return throwError(this.UNAUTHORIZED_MESSAGE);
           }
 
           console.log(errorMsg);
-          return throwError(errorMsg);
+          return throwError(error);
         })
       )
   }
 
-  constructor(
-    private _storeLogin: Store<fromStoreLogin.LoginState>,
-  ) {}
+  constructor(private _storeLogin: Store<fromStoreLogin.LoginState>) { }
 }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Observable, catchError, throwError } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { Observable, throwError } from 'rxjs';
 
 import { DialogComponent } from '../components/dialog/dialog.component';
 import { environment } from '@environments/environment';
+
 import * as fromModels from '@app/models';
 
 @Injectable()
@@ -66,18 +67,11 @@ export class UtilsService {
         sortType: query.sortType ? query.sortType : 0,
       }
     });
-    return this._http.get<fromModels.IResponse<fromModels.Country[]>>(`${this._url}/countries`, { params });
-      // .pipe(
-      //   catchError(this.handleErrorHttp)
-      // );
+    return this._http.get<fromModels.IResponse<fromModels.Country[]>>(`${this._url}/countries`, { params })
+      .pipe(
+        catchError(this.handleErrorHttp)
+      );
   }
-
-  // getCitiesOfCountry(country: string) {
-  //   return this._http.get(`${this._url}cities-by/${country}`)
-  //     // .pipe(
-  //     //   catchError(this.handleErrorHttp)
-  //     // );
-  // }
 
   renderErrors(errors: any) {
     let template = `<p class="mt-10"><strong>Errores:</strong>`;

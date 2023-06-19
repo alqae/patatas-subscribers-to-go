@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { tap, map, exhaustMap, catchError, withLatestFrom } from 'rxjs/operators';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
-import {  of } from 'rxjs';
-import { tap, map, exhaustMap, catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
-import * as fromServicesShared from '@shared/services';
-import * as fromStoreCore from '@core/store/store';
 import * as fromActionsCore from '@app/core/store/actions/router.actions';
 import * as fromActions from '../actions/login.actions';
+import * as fromServicesShared from '@shared/services';
+import * as fromStoreCore from '@core/store/store';
 import * as fromServices from '@login/services';
 import * as fromModels from '@app/models/user';
 import * as fromStore from '../store';
@@ -43,17 +45,11 @@ export class LoginEffects {
   loginFailure$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromActions.ActionTypes.LoginFailure),
-      map((action: fromActions.LoginFailure) => action.payload),
-      tap((response: any) => {
-        const content = {
-          width: '350px',
-          data: {
-            title: 'Alert',
-            message: response.error.error,
-            alert: true
-          }
-        }
-        this._utils.showDialog(content);
+      withLatestFrom(this._translate.get('login-error-message')),
+      tap(([_, errorMessage]) => {
+        this._snackBar.open(errorMessage, 'Close', {
+          duration: 3000,
+        });
       })
     )
   }, { dispatch: false });
@@ -61,10 +57,8 @@ export class LoginEffects {
   logout$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromActions.ActionTypes.Logout),
-      tap(authed => {
-        this._storeCore.dispatch(new fromActionsCore.Go({
-          path: ['']
-        }));
+      tap(() => {
+        this._storeCore.dispatch(new fromActionsCore.Go({ path: ['login'] }));
       })
     )
   }, { dispatch: false });
@@ -73,6 +67,8 @@ export class LoginEffects {
     private actions$: Actions,
     private _service: fromServices.LoginService,
     private _utils: fromServicesShared.UtilsService,
+    private _translate: TranslateService,
+    private _snackBar: MatSnackBar,
     private _store: Store<fromStore.LoginState>,
     private _storeCore: Store<fromStoreCore.CoreState>,
   ) {}

@@ -37,7 +37,7 @@ export class JwtInterceptor implements HttpInterceptor {
     };
 
     if (!req.url.includes('login')) {
-      headers['authorization'] = `Bearer ${this._token.trim()}`;
+      headers['authorization'] = `Bearer ${this._token?.trim()}`;
     }
 
     // clone the request

@@ -34,7 +34,7 @@ export class DetailSubscriptorComponent implements OnInit, OnDestroy {
 
     this._storeSubscribers.select(fromStore.getSubscriptor)
       .subscribe((subscriptor) => {
-        if (subscriptor) {
+        if (subscriptor && subscriptor.Id.toString() === this.subscriptorId) {
           this.subscriptor = subscriptor;
         }
       }

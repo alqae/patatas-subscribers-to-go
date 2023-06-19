@@ -1,5 +1,5 @@
 <mat-form-field appearance="outline">
-  <mat-label>Country</mat-label>
+  <mat-label>{{'field-label-country'|translate}}</mat-label>
   <mat-select
     [formControl]="control"
     msInfiniteScroll
@@ -14,6 +14,6 @@
   <mat-icon matSuffix>language</mat-icon>
 
   <mat-error *ngIf="control.hasError('required')">
-    This field is required
+    {{'field-error-country-required'|translate}}
   </mat-error>
 </mat-form-field>

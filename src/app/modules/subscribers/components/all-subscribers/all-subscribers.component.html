@@ -1,15 +1,21 @@
 <div class="subscribers mat-elevation-z8 pl-10 pr-10">
   <div class="subscribers-header">
-    <h1>Subscribers</h1>
+    <h1>{{'all-subscribers-title'|translate}}</h1>
   
     <div>  
       <button mat-button color="primary" (click)="goToCreate()" class="mr-20">
-        <span>Create</span>
+        <span>{{'all-subscribers-create-cta'|translate}}</span>
         <mat-icon>add</mat-icon>
       </button>
   
       <mat-form-field appearance="outline">
-        <input [formControl]="searchControl" type="search" matInput placeholder="Search" name= "search">
+        <input
+          [formControl]="searchControl"
+          type="search"
+          matInput
+          [placeholder]="('all-subscribers-search-placeholder'|translate)"
+          name="search"
+        >
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
     </div>
@@ -24,35 +30,37 @@
       class="subscribers-table"
     >
   
-    <ng-container matColumnDef="Id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
+    <ng-container matColumnDef="PublicId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by PublicId">
+        {{'all-subscribers-column-id'|translate}}
+      </th>
+      <td mat-cell *matCellDef="let element"> {{element.PublicId}} </td>
     </ng-container>
   
     <ng-container matColumnDef="Name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-        Name
+        {{'all-subscribers-column-name'|translate}}
       </th>
       <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
     </ng-container>
   
     <ng-container matColumnDef="Area">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Area">
-        Area
+        {{'all-subscribers-column-area'|translate}}
       </th>
       <td mat-cell *matCellDef="let element"> {{element.Area}} </td>
     </ng-container>
   
     <ng-container matColumnDef="Email">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by Email">
-        Email
+        {{'all-subscribers-column-email'|translate}}
       </th>
       <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
     </ng-container>
   
     <ng-container matColumnDef="SubscriptionStateDescription">
       <th mat-header-cell *matHeaderCellDef>
-        State
+        {{'all-subscribers-column-state'|translate}}
       </th>
       <td mat-cell *matCellDef="let element"> {{element.SubscriptionStateDescription}} </td>
     </ng-container>
@@ -66,12 +74,12 @@
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="DeleteSubscriptor(element.Id)">
             <mat-icon>delete</mat-icon>
-            <span>Delete</span>
+            <span>{{'all-subscribers-actions-delete'|translate}}</span>
           </button>
   
           <button mat-menu-item (click)="goToDetail(element.Id)">
             <mat-icon>edit</mat-icon>
-            <span>Edit</span>
+            <span>{{'all-subscribers-actions-edit'|translate}}</span>
           </button>
         </mat-menu>
       </td>
@@ -90,6 +98,6 @@
     (page)="handlePageEvent($event)"
     showFirstLastButtons
     #paginator
-  >
+    >
   </mat-paginator>
 </div>

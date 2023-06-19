@@ -18,7 +18,7 @@ import * as fromModels from '@app/models';
 export class AllSubscribersComponent {
   isLoading$: Observable<boolean>;
 
-  displayedColumns: string[] = ['Id', 'Name', 'Area','Email' ,'SubscriptionStateDescription', 'actions'];
+  displayedColumns: string[] = ['PublicId', 'Name', 'Area','Email' ,'SubscriptionStateDescription', 'actions'];
 
   pageSize = 10;
   pageIndex = 0;

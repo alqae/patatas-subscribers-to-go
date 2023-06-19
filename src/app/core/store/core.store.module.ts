@@ -8,13 +8,14 @@ import { localStorageSync } from 'ngrx-store-localstorage';
 import { storeLogger } from 'ngrx-store-logger';
 import { storeFreeze } from 'ngrx-store-freeze';
 
-import { environment } from '@environments/environment';
-// import * as fromStoreShared from '@shared/store';
-import * as fromStoreLogin from '@login/store';
-import * as fromStoreSubscribers from '@subscribers/store';
-import { CoreState, CoreReducers } from './store';
 import { CustomRouterStateSerializer } from './reducers/router.reducer';
 import { RouterEffects } from './effects/router.effects';
+import { environment } from '@environments/environment';
+import { CoreState, CoreReducers } from './store';
+
+import * as fromStoreShared from '@shared/store';
+import * as fromStoreLogin from '@login/store';
+import * as fromStoreSubscribers from '@subscribers/store';
 
 export const StoreEffects = [
   RouterEffects,
@@ -26,7 +27,7 @@ export function logger(reducer: ActionReducer<CoreState>): ActionReducer<CoreSta
 
 export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
   return localStorageSync({ keys: [
-    'login', 'subscribers',
+    'login', 'subscribers', 'shared',
   ], rehydrate: true, storage: sessionStorage })(reducer);
 }
 
@@ -62,7 +63,7 @@ metaReducers.push(clearState);
       logOnly: environment.production
     }),
     EffectsModule.forRoot(StoreEffects),
-    // fromStoreShared.SharedStoreModule,
+    fromStoreShared.SharedStoreModule,
     fromStoreSubscribers.SubscribersStoreModule,
     fromStoreLogin.LoginStoreModule,
   ],

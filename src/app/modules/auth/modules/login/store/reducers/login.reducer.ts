@@ -21,7 +21,7 @@ export function LoginReducer(state = fromStore.initialState, action: fromActions
     case fromActions.ActionTypes.LoginFailure: {
       return { ...state, ...{
         isLoading: false,
-        error: action.payload,
+        // error: ,
       }};
     }
 
